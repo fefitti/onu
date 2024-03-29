@@ -1,0 +1,13 @@
+from pymongo import MongoClient
+
+def salvar_no_mongodb(usuario):
+    client = MongoClient('localhost', 27017)
+    db = client['usuarios_db']
+    usuarios = db['usuarios']
+    usuarios.insert_one({'nome': usuario.nome, 'sobrenome': usuario.sobrenome, 'email': usuario.email, 'telefone': usuario.telefone})
+
+def carregar_do_mongodb():
+    client = MongoClient('localhost', 27017)
+    db = client['usuarios_db']
+    usuarios = db['usuarios']
+    return [Usuario(**usuario) for usuario in usuarios.find()]
